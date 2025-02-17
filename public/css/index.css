@@ -1,0 +1,90 @@
+@font-face {
+  font-family: 'Inter';
+  src: url('../fonts/Inter.ttf') format('truetype');
+  font-weight: 100 900;
+  font-style: normal;
+}
+
+:root {
+  --grey-900: #141414;
+  --grey-800: #1F1F1F;
+  --grey-700: #333333;
+  --active: #C4F82A;
+  --white: #FFFFFF;
+  --spacing-4: 0.5rem;
+  --spacing-8: 1rem;
+  --spacing-12: 1.5rem;
+  --spacing-16: 2rem;
+  --spacing-24: 3rem;
+  --spacing-40: 5rem;
+}
+
+html {
+  font-size: 8px;
+}
+
+/* Utility classes */
+.text-1 {
+  font-size: var(--spacing-24);
+  line-height: 150%;
+  letter-spacing: 0rem;
+  font-weight: 700;
+}
+.text-2 {
+  line-height: 150%;
+}
+.bold {
+  font-weight: 700;
+} 
+.accent {
+  color: var(--active);
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  font-size: 1.75rem;
+  font-weight: normal;
+  color: var(--white);
+  display: grid;
+  grid-template-columns: 1fr [content-start] clamp(40.875rem, 100%, 48rem) [content-end] 1fr;
+  grid-template-rows: 1fr 1fr 1fr;
+  background-color: var(--grey-900);
+}
+
+body > * {
+  grid-column: content-start / content-end;
+  grid-row: 2;
+}
+
+.card {
+  background-color: var(--grey-800);
+  border-radius: 1.5rem;
+  display: grid;
+  grid-template-columns: 1fr clamp(34.875rem, 100%, 38rem) 1fr;
+  padding-block: var(--spacing-40);
+}
+
+.card > * {
+  grid-column: 2;
+  /* outline: 1px solid red; */
+}
+
+.links {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  gap: 2rem;
+  & a {
+    display: inline-block;
+    color: var(--white);
+    font-weight: 700;
+    text-decoration: none;
+    background-color: var(--grey-700);
+    border-radius: 1rem;
+    width: 100%;
+    text-align: center;
+    line-height: 150%;
+    padding-block: 1rem;
+  }
+}
