@@ -40,19 +40,40 @@ html {
   color: var(--active);
 }
 
+#overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 900;
+  grid-column: 1;
+  grid-row: 1;
+}
+#desktop-overlay {
+  width: 1440px;
+  height: 960px;
+  & img {
+    width: 100%;
+    height: 100%;
+    opacity: 1;
+  }
+}
+
 body {
   font-family: 'Inter', sans-serif;
   font-size: 1.75rem;
   font-weight: normal;
   color: var(--white);
-  display: grid;
-  grid-template-columns: 1fr [content-start] clamp(40.875rem, 100%, 48rem) [content-end] 1fr;
-  grid-template-rows: 1fr 1fr 1fr;
   background-color: var(--grey-900);
+  display: grid;
+  grid-template-rows: 1fr auto 1fr;
+  position: relative;
 }
 
-body > * {
-  grid-column: content-start / content-end;
+main {
+  display: grid;
+  width:max-content;
+  padding-inline: 3rem;
+  margin-inline: auto;
   grid-row: 2;
 }
 
@@ -60,13 +81,38 @@ body > * {
   background-color: var(--grey-800);
   border-radius: 1.5rem;
   display: grid;
-  grid-template-columns: 1fr clamp(34.875rem, 100%, 38rem) 1fr;
+  grid-template-columns: 1fr 38rem 1fr;
+  padding-inline: var(--spacing-24);
   padding-block: var(--spacing-40);
 }
 
 .card > * {
   grid-column: 2;
   /* outline: 1px solid red; */
+}
+
+.bio {
+  text-align: center;
+  & .hero-image {
+    display: block;
+    width: 100%;
+    margin-bottom: 3.25rem;
+    & img {
+      width: 11rem;
+      border-radius: 50%;
+      overflow: hidden;
+      margin-inline: auto;
+    }
+  }
+}
+
+h1.text-1 {
+  margin-bottom: 0.25rem;
+}
+
+p.text-2,
+p.quote {
+  margin-bottom: 3rem;
 }
 
 .links {
@@ -85,6 +131,6 @@ body > * {
     width: 100%;
     text-align: center;
     line-height: 150%;
-    padding-block: 1rem;
+    padding-block: 1.5rem;
   }
 }
