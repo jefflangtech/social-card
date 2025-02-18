@@ -40,6 +40,7 @@ html {
   color: var(--active);
 }
 
+/* Overlay styles for pixel proofing only */
 #overlay {
   position: absolute;
   top: 0;
@@ -54,7 +55,18 @@ html {
   & img {
     width: 100%;
     height: 100%;
-    opacity: 1;
+    opacity: 0.4;
+    outline:1px solid red;
+  }
+}
+#mobile-overlay {
+  width: 375px;
+  height: 812px;
+  & img {
+    width: 100%;
+    height: 100%;
+    opacity: 0.4;
+    outline:1px solid red;
   }
 }
 
@@ -65,15 +77,13 @@ body {
   color: var(--white);
   background-color: var(--grey-900);
   display: grid;
+  grid-template-columns: minmax(1px, 1fr) [content-start] clamp(40.875rem, 87.2%, 48rem) [content-end] minmax(1px, 1fr);
   grid-template-rows: 1fr auto 1fr;
   position: relative;
 }
 
-main {
-  display: grid;
-  width:max-content;
-  padding-inline: 3rem;
-  margin-inline: auto;
+body > * {
+  grid-column: content-start / content-end;
   grid-row: 2;
 }
 
@@ -81,14 +91,13 @@ main {
   background-color: var(--grey-800);
   border-radius: 1.5rem;
   display: grid;
-  grid-template-columns: 1fr 38rem 1fr;
+  grid-template-columns: 1fr clamp(34.875rem, 91.7%, 38rem) 1fr;
   padding-inline: var(--spacing-24);
   padding-block: var(--spacing-40);
 }
 
 .card > * {
   grid-column: 2;
-  /* outline: 1px solid red; */
 }
 
 .bio {
@@ -132,5 +141,11 @@ p.quote {
     text-align: center;
     line-height: 150%;
     padding-block: 1.5rem;
+  }
+}
+
+@media (max-width: 400px) {
+  .card {
+    padding-block: var(--spacing-24);
   }
 }
