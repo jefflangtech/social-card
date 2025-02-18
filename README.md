@@ -20,7 +20,6 @@ This is a solution to the [Recipe page challenge on Frontend Mentor](https://www
 ### Preview
 
 ![Solution Preview](./preview.png)
-I forgot to move the mouse cursor, haha.
 
 ### Links
 
