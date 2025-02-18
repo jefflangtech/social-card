@@ -141,6 +141,10 @@ p.quote {
     text-align: center;
     line-height: 150%;
     padding-block: 1.5rem;
+    &:hover {
+      color: var(--grey-900);
+      background-color: var(--active);
+    }
   }
 }
 
