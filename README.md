@@ -33,66 +33,54 @@ This is a solution to the [Recipe page challenge on Frontend Mentor](https://www
 - Semantic HTML5 markup
 - CSS custom properties
 - CSS Grid
-- HTML Templates
 
 ### Step by step
 
-I went big-to-small when approaching the styling. This was the first time that I tried keeping all the layout rules at the document level (in this case I went grid) and plugged in components that had no margin of their own, only concerned with styling their internal contents. 
+This time I went big with grid everywhere, and I definitely learned a few things!
 
 I find it helpful to markup a screenshot of the design:
-![Preview Markup](./design/desktop-preview-markup.png)
-I also missed one grid row, since the hero image needs to occupy its own row, and then I was able to break it out when switching to mobile. I used named grid lines to do that.
+![Preview Markup](./design/desktop-markup.png)
+I did **not** use grid columns on the left/right of the article element. Those became padding rules.
 
-Here is all the content in the center column, between [start-col] and [end-col].
+Super useful: grid columns and rows on the body for centering content, even when going from desktop to mobile. Any 1fr grid column or row will grow to fill the space as needed, and then can shrink to 0px when the screen resizes. 
 
 ```css
-main {
+body {
+  font-family: 'Inter', sans-serif;
+  font-size: 1.75rem;
+  font-weight: normal;
+  color: var(--white);
+  background-color: var(--grey-900);
   display: grid;
   grid-template-columns: 
-    [start-left] 5rem 
-    [start-col] 656px [end-col] 
-    5rem [end-right];
-  grid-template-rows: repeat(auto-fit, minmax(100px, auto));
-  row-gap: 4rem;
-}
-main > * {
-  grid-column: start-col / end-col;
-  grid-row: auto;
+    minmax(1px, 1fr) 
+    [content-start] clamp(40.875rem, 87.2%, 48rem) [content-end] 
+    minmax(1px, 1fr);
+  grid-template-rows: 1fr auto 1fr;
+  position: relative;
 }
 ```
 
-Breaking the hero image out just means to set the grid-column to [start-left] / [end-right]. Pretty nifty!
+There IS a quirky behavior when the screen starts shrinking down below typical or expected sizes, and since I have clamped widths on the grid, the content itself won't resize anymore: some of the content starts getting pushed off the sides of the screen. It doesn't happen evenly, even with a justify-content rule set. **You can trick the browser into keeping content centered, even at super small sizes, by not letting those outside columns go to zero via the minmax(1px, 1fr) rule.**
 
-Finally, here is my custom element in the JS (I excluded the content setter method). First time using custom elements and I'll probably spend some time exploring those use cases more.
+The other thing I learned was **don't use a grid column when padding is more appropriate.** I think the browser just has a bit of an easier time with it, and grid areas with no content are subject to resizing at the browser's best algorithmic determination.
 
-```js
-class RecipeCard extends HTMLElement {
-  constructor() {
-    super();
-    this.template = document.createElement("template");
-    this.template.innerHTML = `
-      <h2 id="card-title"></h2>
-      <div id="card-body">
-        <slot></slot>
-      </div>
-    `;
-  }
-
-  connectedCallback() {
-    this.appendChild(this.template.content.cloneNode(true));
+Also, I literally have one rule when the size goes from desktop to mobile, to adjust that padding:
+```css
+@media (max-width: 400px) {
+  .card {
+    padding-block: var(--spacing-24);
   }
 }
-
-customElements.define('recipe-card', RecipeCard);
 ```
 
 ### Continued development
 
-I went light DOM for this project, preferring to let styling for my injected component elements come from global rules. I did structure the CSS in a way that it would have been pretty easy to go shadow DOM and encapsulate component styling, but I'll do that with a future challenge. I also want to try using shadow DOM components that get styling from the global rules, as that sounds like a more complicated challenge.
+I read about a nifty trick in the HTML spec that I wanted to try this time around but didn't because I just styled the &lt;a> elements appropriately. The trick, however, is when a link element is part of a grouping in a parent and the parent is physically larger in pixel size. When the parent is clicked, if the link is found in the parent, it will trickle down the click to the link itself. Seemed like a neat javascript trick.
 
 ### Useful resources
 
-- [Kevin Powell: 3 underused CSS Grid Features](https://www.youtube.com/watch?v=ciuZJE74wBA) - This wasn't the original video I saw, but he does still explain how to manipulate content across grid columns using named grid lines. I used this to break out the hero image in the mobile view.
+- [Kevin Powell: 3 underused CSS Grid Features](https://www.youtube.com/watch?v=ciuZJE74wBA) - This wasn't the original video I saw, but he does still explain how to manipulate content across grid columns using named grid lines. I'm finding constraining content to specific named grid areas very useful.
 
 ## Author
 
